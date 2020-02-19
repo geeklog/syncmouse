@@ -7,6 +7,7 @@ module.exports = class BiSocket {
     const http = this.http = require('http').Server(app);
     this.server = require('socket.io')(http);
     this.client = require('socket.io-client')(peerAddress);
+    this.onConnecteds = [];
     this.onRecvs = [];
   }
 
@@ -14,9 +15,11 @@ module.exports = class BiSocket {
     this.server.on('connection', (socket) => {
       console.log('peer client connected');
       this.peerSocket = socket;
+      this.peerClientConnected = true;
       socket.on('disconnect', function () {
         console.log('peer client disconnected');
         this.peerSocket = null;
+        this.peerClientConnected = false;
       });
       socket.on('message', (msg) => {
         console.log('recv:', msg);
@@ -24,6 +27,7 @@ module.exports = class BiSocket {
           recv(msg);
         }
       })
+      this.checkConnection();
     });
     
     const servPort = Number(this.servAddress.split(':').pop())
@@ -33,13 +37,20 @@ module.exports = class BiSocket {
     this.client.connect(this.peerAddress);
     this.client.on('connect', function() {
       console.log('peer server connected');
+      this.peerServerConnected = true;
+      this.checkConnection();
     });
     this.client.on('event', function(data) {
       console.log('data');
     });
-    this.client.on('disconnect', function() {
+    this.client.on('disconnect', () => {
       console.log('peer server disconnected');
+      this.peerServerConnected = false;
     });
+  }
+
+  connected(callback) {
+    this.onConnecteds.push(callback);
   }
 
   send(msg) {
@@ -50,5 +61,12 @@ module.exports = class BiSocket {
     this.onRecvs.push(callback);
   }
 
+  checkConnection() {
+    if (this.peerClientConnected && this.peerServerConnected) {
+      for (const callback of this.onConnecteds) {
+        callback();
+      }
+    }
+  }
 }
 

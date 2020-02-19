@@ -31,34 +31,50 @@ module.exports = function(node) {
     robot.dragMouse(pos.x, pos.y);
   }, 0);
 
+  
   let mouseState;
+  let peerScreen;
 
   node.recv(msg => {
-    if (msg.type === 'click') {
+    if (msg.type === 'screen') {
+      peerScreen = { width: msg.width, height: msg.height };
+      return;
+    }
+    if (msg.type === 'mouseclick') {
       robot.mouseClick();
       mouseState = 'up';
       return;
     }
-    if (msg.type === 'scroll') {
-      robot.scrollMouse(0, -msg.span);
+    if (msg.type === 'mousewheel') {
+      robot.scrollMouse(0, -msg.rotation * msg.amount);
+      return;
     }
-    if (msg.type === 'move') {
-      const x = screen.width * msg.pos.px;
-      const y = screen.height * msg.pos.py;
+    if (msg.type === 'mousemove') {
+      const x = screen.width * msg.x / peerScreen.width;
+      const y = screen.height * msg.y / peerScreen.height;
       mouseMovePoses.push({x, y});
+      return;
     }
-    if (msg.type === 'drag') {
-      const x = screen.width * msg.px;
-      const y = screen.height * msg.py;
+    if (msg.type === 'mousedrag') {
+      const x = screen.width * msg.x / peerScreen.width;
+      const y = screen.height * msg.y / peerScreen.height;
       if (mouseState !== 'down') {
         robot.mouseToggle('down');
         mouseState = 'down';
       }
       robot.dragMouse(x, y);
+      return;
     }
     if (msg.type === 'mouseup') {
       robot.mouseToggle('up');
       mouseState = 'up';
+      return;
     }
+    if (msg.type === 'keypress') {
+      robot.keyTap(String.fromCharCode(msg.keycode));
+      return;
+    }
+
+    console.log('unkown event', msg);
   });
 }

@@ -13,16 +13,16 @@ cmdr.parse(process.argv);
 
 const node = new BiSocket( cmdr.selfAddress, cmdr.peerAddress );
 
-// clipboardSync(node);
-
-if (cmdr.mode === 'server') {
-  mkServer(node);
-} else if (cmdr.mode === 'client') {
-  mkClient(node);
-} else {
-  throw new Error(`Configuration Error: mode=${cmdr.mode}`);
-}
-
 node.start();
 
-clipboardSync(node);
+node.connected(() => {
+  clipboardSync(node);
+
+  if (cmdr.mode === 'server') {
+    mkServer(node);
+  } else if (cmdr.mode === 'client') {
+    mkClient(node);
+  } else {
+    throw new Error(`Configuration Error: mode=${cmdr.mode}`);
+  }
+})
