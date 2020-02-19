@@ -11,12 +11,11 @@ node.start();
 let lastCp;
 let cp;
 
-node.recv((...msg) => {
+node.recv(msg => {
   if (msg.type === 'cpSync') {
     cp = msg.data;
     if (cp !== lastCp) {
       lastCp = cp;
-      console.log('sync:', cp);
       clipboardy.writeSync(msg.data);
     }
   }
