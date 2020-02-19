@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install && cp bin/iohook.node node_modules/iohook/builds/node-v64-darwin-x64/build/Release"
   },
   "keywords": [],
   "author": "",

@@ -11,10 +11,9 @@ cmdr
 
 cmdr.parse(process.argv);
 
-const node = new BiSocket(
-  cmdr.selfAddress,
-  cmdr.peerAddress
-);
+const node = new BiSocket( cmdr.selfAddress, cmdr.peerAddress );
+
+// clipboardSync(node);
 
 if (cmdr.mode === 'server') {
   mkServer(node);

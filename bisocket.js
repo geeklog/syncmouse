@@ -25,10 +25,10 @@ module.exports = class BiSocket {
         }
       })
     });
-
+    
     const servPort = Number(this.servAddress.split(':').pop())
     this.http.listen(servPort);
-    console.log(`serve at: ${servPort}`);
+    console.log(`serve at: ${this.servAddress}`);
 
     this.client.connect(this.peerAddress);
     this.client.on('connect', function() {
