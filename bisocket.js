@@ -22,7 +22,6 @@ module.exports = class BiSocket {
         this.peerClientConnected = false;
       });
       socket.on('message', (msg) => {
-        console.log('recv:', msg);
         for (const recv of this.onRecvs) {
           recv(msg);
         }
@@ -41,7 +40,7 @@ module.exports = class BiSocket {
       this.checkConnection();
     });
     this.client.on('event', (data) => {
-      console.log('data');
+      console.log(data);
     });
     this.client.on('disconnect', () => {
       console.log('peer server disconnected');
@@ -69,4 +68,3 @@ module.exports = class BiSocket {
     }
   }
 };
-
