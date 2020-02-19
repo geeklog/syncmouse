@@ -1,0 +1,33 @@
+title H
+meta(charset='UTF-8')
+meta(name='viewport' content='width=device-width,initial-scale=1')
+title Document
+#text ...
+.content(style='width:800;height:400;background-color:lightgray')
+  canvas#screen(width=800 height=400)
+script(src='/socket.io/socket.io.js')
+script.
+  const canvas = document.getElementById('screen');
+  const socket = io();
+  const context = canvas.getContext('2d');
+  let lastTime = new Date().getTime();
+  socket.on('message', data => {
+    const { px, py } = JSON.parse(data);
+    const x = px * canvas.width;
+    const y = py * canvas.height;
+    const radius = 10;
+    const time = new Date().getTime();
+    //- console.log(time - lastTime, x, y);
+    lastTime = time;
+
+    document.querySelector('#text').innerHTML = data;
+    
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#003300';
+    context.stroke();
+  });
