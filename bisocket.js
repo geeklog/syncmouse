@@ -7,6 +7,7 @@ module.exports = class BiSocket {
     const http = this.http = require('http').Server(app);
     this.server = require('socket.io')(http);
     this.client = require('socket.io-client')(peerAddress);
+    this.onRecvs = [];
   }
 
   start() {
@@ -19,7 +20,9 @@ module.exports = class BiSocket {
       });
       socket.on('message', (msg) => {
         console.log('recv:', msg);
-        this.onRecv && this.onRecv(msg);
+        for (const recv of this.onRecvs) {
+          recv(msg);
+        }
       })
     });
 
@@ -44,7 +47,7 @@ module.exports = class BiSocket {
   }
 
   recv(callback) {
-    this.onRecv = callback;
+    this.onRecvs.push(callback);
   }
 
 }

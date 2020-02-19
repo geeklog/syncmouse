@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "clipboardy": "^2.2.0",
+    "commander": "^4.1.1",
     "express": "^4.17.1",
     "iohook": "^0.6.5",
     "pug": "^2.0.4",
