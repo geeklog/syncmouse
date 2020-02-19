@@ -37,7 +37,7 @@ module.exports = class BiSocket {
     this.client.on('event', function(data) {
       console.log('data');
     });
-    this.client.on('disconnect', function(){
+    this.client.on('disconnect', function() {
       console.log('peer server disconnected');
     });
   }

@@ -24,6 +24,5 @@ module.exports = function clipboardSync(node) {
       node.send({type: 'cpSync', data: cp});
       lastCp = cp;
     }
-  
   }, 1000);
 }
