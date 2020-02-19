@@ -77,4 +77,4 @@ module.exports = function(node) {
 
     console.log('unkown event', msg);
   });
-}
+};

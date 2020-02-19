@@ -13,26 +13,17 @@ module.exports = function(node) {
       height: screen.height
     });
   });
-  ioHook.disableClickPropagation();
-  ioHook.on('mousemove', (msg) => {
-    node.send({
-      ...msg,
-      px: x / screen.width,
-      py: y / screen.height
-    });
-  });
-  ioHook.on('mousedrag', msg => 
-    node.send({
-      ...msg,
-      px: msg.x / screen.width, 
-      py: msg.y / screen.height
-    })
-  );
+
+  // ioHook.disableClickPropagation();
+
+  ioHook.on('mousemove', (msg) => node.send(msg));
+  ioHook.on('mousedrag', msg => node.send(msg));
   ioHook.on('mousewheel', (msg) => node.send(msg));
   ioHook.on('mouseclick', (msg) => node.send(msg));
   ioHook.on('mouseup', (msg) => node.send(msg));
   ioHook.on('keypress', (msg) => node.send(msg));
   ioHook.on('keydown', (msg) => node.send(msg));
   ioHook.on('keyup', (msg) => node.send(msg));
+
   ioHook.start();
-}
+};

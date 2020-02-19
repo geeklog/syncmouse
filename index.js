@@ -25,4 +25,4 @@ node.connected(() => {
   } else {
     throw new Error(`Configuration Error: mode=${cmdr.mode}`);
   }
-})
+});

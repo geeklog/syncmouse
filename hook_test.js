@@ -13,7 +13,7 @@ ioHook.on('mouseclick', ({type}) => {
 ioHook.on('mousewheel', ({type, rotation, amount, clicks, direction }) => {
   console.log('mousewheel', rotation * amount);
   node.send({type: 'scroll', span: rotation * amount});
-})
+});
 
 ioHook.on('mousedrag', msg => {
   node.send({

@@ -26,21 +26,21 @@ module.exports = class BiSocket {
         for (const recv of this.onRecvs) {
           recv(msg);
         }
-      })
+      });
       this.checkConnection();
     });
     
-    const servPort = Number(this.servAddress.split(':').pop())
+    const servPort = Number(this.servAddress.split(':').pop());
     this.http.listen(servPort);
     console.log(`serve at: ${this.servAddress}`);
 
     this.client.connect(this.peerAddress);
-    this.client.on('connect', function() {
+    this.client.on('connect', () => {
       console.log('peer server connected');
       this.peerServerConnected = true;
       this.checkConnection();
     });
-    this.client.on('event', function(data) {
+    this.client.on('event', (data) => {
       console.log('data');
     });
     this.client.on('disconnect', () => {
@@ -68,5 +68,5 @@ module.exports = class BiSocket {
       }
     }
   }
-}
+};
 
