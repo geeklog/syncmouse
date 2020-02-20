@@ -1,7 +1,7 @@
 const reverseMap = (map) => {
   const reversed = {};
-  for (const [k, v] of map.entries()) {
-    reversed[v] = k;
+  for (const k in map) {
+    reversed[map[k]] = k;
   }
   return map;
 };
@@ -19,8 +19,8 @@ const keymap = {
   "0": 0x000B,
 };
 
-export const charKeys = keymap;
-export const keyChars = reverseMap(keymap);
+exports.charKeys = keymap;
+exports.keyChars = reverseMap(keymap);
 
 // #define VC_ESCAPE							0x0001
 // #define VC_F1									0x003B
