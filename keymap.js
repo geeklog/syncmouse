@@ -3,7 +3,7 @@ const reverseMap = (map) => {
   for (const k in map) {
     reversed[map[k]] = k;
   }
-  return map;
+  return reversed;
 };
 
 const keymap = {
@@ -58,7 +58,7 @@ const keymap = {
   "shift": 42,
   "ctrl": 29,
   "meta": 3675,
-  "escape": 14,
+  "backspace": 14,
 };
 
 exports.charKeys = keymap;
