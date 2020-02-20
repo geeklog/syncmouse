@@ -1,43 +1,36 @@
 const ioHook = require('iohook');
 
-ioHook.on('mousemove', ({type, x, y}) => {
-  console.log('mousemove', x, y);
-  sendMousePos(x, y);
-});
+// ioHook.on('mousemove', (msg) => {
+//   console.log(msg);
+// });
 
-ioHook.on('mouseclick', ({type}) => {
-  console.log('mouseclick');
-  node.send({type: 'click'});
-});
+// ioHook.on('mouseclick', (msg) => {
+//   console.log(msg);
+// });
 
-ioHook.on('mousewheel', ({type, rotation, amount, clicks, direction }) => {
-  console.log('mousewheel', rotation * amount);
-  node.send({type: 'scroll', span: rotation * amount});
-});
+// ioHook.on('mousewheel', (msg) => {
+//   console.log(msg);
+// });
 
-ioHook.on('mousedrag', msg => {
-  node.send({
-    type: 'drag',
-    px: msg.x / screen.width, 
-    py: msg.y / screen.height
-  });
-});
+// ioHook.on('mousedrag', msg => {
+//     console.log(msg);
+// });
 
-ioHook.on('mouseup', msg => {
-  node.send({ type: 'mouseup' });
-});
+// ioHook.on('mouseup', msg => {
+//   console.log(msg);
+// });
 
-ioHook.on('keypress',function(msg) {
-  console.log('keypress', msg);
-});
+// ioHook.on('keypress',function(msg) {
+//   console.log(msg);
+// });
 
-ioHook.on('keydown',function(msg) {
-  console.log('keydown', msg);
-});
+// ioHook.on('keydown',function(msg) {
+//   console.log(msg);
+// });
 
 ioHook.on('keyup',function(msg) {
-  console.log('keyup', msg);
+  console.log('', msg.keycode);
 });
 
 ioHook.start();
-ioHook.setDebug(true);
+// ioHook.setDebug(true);
