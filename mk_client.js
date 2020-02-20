@@ -2,6 +2,7 @@
  * mk stand for mouse_keyboard
  */
 const robot = require('robotjs');
+const { keyChars } = require('./keymap');
 
 module.exports = function(node) {
   const screen = robot.getScreenSize();
@@ -70,8 +71,12 @@ module.exports = function(node) {
       mouseState = 'up';
       return;
     }
-    if (msg.type === 'keypress') {
-      robot.keyTap(String.fromCharCode(msg.keycode));
+    if (msg.type === 'keyup') {
+      robot.keyToggle(keyChars[msg.keycode], 'up');
+      return;
+    }
+    if (msg.type === 'keydown') {
+      robot.keyToggle(keyChars[msg.keycode], 'down');
       return;
     }
 
